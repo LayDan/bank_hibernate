@@ -10,21 +10,19 @@ public class Domain {
         Session session = HibirnateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        User user = new User();
-        user.setAge(17);
-        user.setFirstName("Kirill");
-        user.setSecondName("Polian");
-        user.setID(1);
+        User user = new User(1,17, "Kirill", "Polian");
+
 
         Bill bill = new Bill();
-        bill.setId(123);
+        bill.setId(1234);
         bill.setAmoung(0);
         bill.setCurrency("UAH");
-        bill.setUser_id(user.getID());
+        bill.setUser_id(user);
 
         session.save(user);
         session.save(bill);
 
+        session.flush();
         session.getTransaction().commit();
         HibirnateUtil.shutdown();
     }

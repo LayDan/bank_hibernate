@@ -1,11 +1,23 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+
+    public User(int ID, int age, String firstName, String secondName) {
+        this.ID = ID;
+        Age = age;
+        FirstName = firstName;
+        SecondName = secondName;
+    }
+
+    public User() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)

@@ -4,13 +4,14 @@
 
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.bytecode.use_reflection_opimizer">false</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bank?serverTimezone=CST6CDT</property>
+        <property name="hibernate.id.new_generator_mappings">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bank</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">MYFIRSTSQLSERVER</property>
         <property name="show_sql">true</property>
+        <property name="hbm2dl.auto">create-drop</property>
 
         <!-- List of XML mapping files -->
         <mapping class="entity.User"/>

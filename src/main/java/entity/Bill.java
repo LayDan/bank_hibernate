@@ -1,12 +1,13 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "bill")
-public class Bill {
+public class Bill implements Serializable {
     @Id
-    @PrimaryKeyJoinColumn(name = "Number_card_Id")
+    @Column(name = "Number_card_Id")
     private int id;
 
     @Column(name = "Currency", nullable = false, length = 3)
@@ -15,8 +16,9 @@ public class Bill {
     @Column(name = "Amoung", nullable = false)
     private double amoung;
 
-    @Column(name = "UserID", nullable = false)
-    private int user_id;
+    @ManyToOne()
+    @JoinColumn(name="UserID")
+    private User user_id;
 
     public int getId() {
         return id;
@@ -42,11 +44,11 @@ public class Bill {
         this.amoung = amoung;
     }
 
-    public int getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 }
