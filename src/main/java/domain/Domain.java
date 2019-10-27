@@ -10,11 +10,11 @@ public class Domain {
         Session session = HibirnateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        User user = new User(1,17, "Kirill", "Polian");
+        User user = new User(1, 17, "Kirill", "Polian");
 
 
         Bill bill = new Bill();
-        bill.setId(1234);
+        bill.setId(12354);
         bill.setAmoung(0);
         bill.setCurrency("UAH");
         bill.setUser_id(user);

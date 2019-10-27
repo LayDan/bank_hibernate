@@ -17,8 +17,9 @@ public class Bill implements Serializable {
     private double amoung;
 
     @ManyToOne()
-    @JoinColumn(name="UserID")
+    @JoinColumn(name = "UserID", referencedColumnName = "Id")
     private User user_id;
+
 
     public int getId() {
         return id;
@@ -51,4 +52,5 @@ public class Bill implements Serializable {
     public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
+
 }
