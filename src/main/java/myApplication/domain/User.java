@@ -1,15 +1,13 @@
-package entity;
+package myApplication.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
 
-    public User(int ID, int age, String firstName, String secondName) {
-        this.ID = ID;
+    public User( int age, String firstName, String secondName) {
         Age = age;
         FirstName = firstName;
         SecondName = secondName;
@@ -21,7 +19,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
-    private int ID;
+    private int id;
 
     @Column(name = "FirstName", nullable = false)
     private String FirstName;
@@ -32,12 +30,12 @@ public class User implements Serializable {
     @Column(name = "Age", nullable = false)
     private int Age;
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {

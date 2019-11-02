@@ -1,4 +1,4 @@
-package entity;
+package myApplication.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;

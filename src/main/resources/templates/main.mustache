@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!--    <link rel="stylesheet" href="/static/style.css">-->
+</head>
+
+<body>
+<form action="/logout"  method="post">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+    <input type="submit" value="Sign Out"/>
+</form>
+<header class="header">
+    <div class="header_top">
+        <div class="conteiner">
+            <a class="tel" href="tel:+380688749246">+380 68 87 49 246</a>
+            <a class="mail" href="https://mail.google.com/mail/u/1/#inbox">valerii.vasylkivskyi@gmail.com</a>
+        </div>
+    </div>
+    <div class="header_links">
+        <a href="#">Главная</a>
+        <a href="#">Список аниме</a>
+        <a href="#">Объявления</a>
+        <a href="#">Ваш Аккаунт</a>
+    </div>
+
+    <div class="header_logo">
+
+    </div>
+    <div class="header_entered">
+
+    </div>
+</header>
+<div>
+    <form method="post">
+        <input type="text" name="FirstName" placeholder="Введите ваше имя"/> <br>
+        <input type="text" name="SecondName" placeholder="Введите вашу фамилию"/><br>
+        <input type="number" min="18" name="Age" placeholder="Введите ваш возраст"/><br>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<div>
+    Список пользователей:
+</div>
+{{#users}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{FirstName}}</span>
+        <span>{{SecondName}}</span>
+        <i>{{Age}}</i>
+    </div>
+{{/users}}
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+*{
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}
+.header{
+    background-size: cover;
+    background-color: white;
+    max-width: 100%;
+
+}
+.header_links{
+    color: gold;
+}
+.header_top{
+    max-width: 100%;
+    height: 25px;
+    background-size: cover;
+    background-color: #18120e;
+}
+.tel{
+    float: right;
+    padding: 5px 20px 4px 50px;
+    color: rgb(0, 0, 0);
+    line-height: 36px;
+    background-color: yellow;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+}
+.conteiner{
+    max-width:1170px;
+    margin: 0 auto;
+    padding: 0, 15px;
+}
+.mail{
+    color:#ffff;
+    text-decoration: none;
+    line-height: 45px;
+
+}
