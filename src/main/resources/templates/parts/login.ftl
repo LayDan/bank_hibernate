@@ -1,22 +1,29 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>d </title>
-</head>
-<body>
-Add user
-{{#infoAboutAccount}}
-    {{infoAboutAccount}}
-{{/infoAboutAccount}}
+<#macro login path>
+<form action="${path}" method="post">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+</#macro>
 
-<form action="/registration" method="post">
+<#macro registration>
+
+<form method="post">
     <div><label> User Name : <input type="text" name="username" placeholder="Введите ваше login"/> </label></div>
     <div><label> Password: <input type="password" name="password" placeholder="Введите password"/> </label></div>
     <div><label> FirstName: <input type="text" name="FirstName" placeholder="Введите ваше имя"/> </label></div>
     <div><label> SecondName: <input type="text" name="SecondName" placeholder="Введите Фамилию"/> </label></div>
     <div><label> Age: <input type="number" name="Age" placeholder="Введите ваше возраст"/> </label></div>
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     <div><input type="submit" value="Sign In"/></div>
+
 </form>
-</body>
-</html>
+</#macro>
+
+<#macro logout>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <input type="submit" value="Sign Out"/>
+</form>
+</#macro>

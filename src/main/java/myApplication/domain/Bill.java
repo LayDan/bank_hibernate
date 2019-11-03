@@ -16,7 +16,7 @@ public class Bill implements Serializable {
     @Column(name = "Amoung", nullable = false)
     private double amoung;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "UserID", referencedColumnName = "Id")
     private User user_id;
 

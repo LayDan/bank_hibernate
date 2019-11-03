@@ -1,8 +1,10 @@
 package myApplication.controller;
 
+import myApplication.domain.Account;
 import myApplication.domain.User;
 import myApplication.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ public class MainController {
         return "greeting";
     }
 
+
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<User> users = userRepository.findAll();
@@ -28,17 +31,17 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String FirstName, @RequestParam String SecondName, @RequestParam int Age, Map<String, Object> model) {
+    public String add(
+            @AuthenticationPrincipal Account account,
+            @RequestParam String FirstName,
+            @RequestParam String SecondName,
+            @RequestParam int Age, Map<String, Object> model) {
         User user = new User(Age, FirstName, SecondName);
         userRepository.save(user);
         Iterable<User> users = userRepository.findAll();
         model.put("users", users);
         return "main";
     }
-//    @GetMapping("/login")
-//    public String login(Map<String, Object> model) {
-//        return "login";
-//    }
 
 
 }

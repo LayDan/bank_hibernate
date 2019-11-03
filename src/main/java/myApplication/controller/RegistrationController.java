@@ -31,11 +31,12 @@ public class RegistrationController {
         if (accountFromDb != null) {
             model.put("infoAboutAccount", "User exists!");
             return "registration";
+        } else {
+            account.setActive(true);
+            account.setRoles(Collections.singleton(Role.USER));
+            accountRepo.save(account);
+            userRepository.save(user);
+            return "redirect:/login";
         }
-        account.setActive(true);
-        account.setRoles(Collections.singleton(Role.USER));
-        accountRepo.save(account);
-        userRepository.save(user);
-        return "redirect:/login";
     }
 }
