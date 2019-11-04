@@ -10,11 +10,11 @@
     </tr>
     </thead>
     <tbody>
-    <#list accounts as ac>
+    <#list users as u>
     <tr>
-        <td>${ac.username}</td>
-        <td><#list ac.roles as role>${role}<#sep>,</#list></td>
-        <td><a href="/account/${ac.id}">edit</a></td>
+        <td>${u.username}</td>
+        <td><#list u.roles as role>${role}<#sep>,</#list></td>
+        <td><a href="/usersList/${u.id}">edit</a></td>
     </tr>
     </#list>
     </tbody>

@@ -1,32 +1,53 @@
 package myApplication.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "bill")
-public class Bill implements Serializable {
+public class Bill {
     @Id
-    @Column(name = "Number_card_Id")
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "Currency", nullable = false, length = 3)
+    @Column(nullable = false, length = 3)
     private String currency;
 
-    @Column(name = "Amoung", nullable = false)
+    @Column(nullable = false)
     private double amoung;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "UserID", referencedColumnName = "Id")
+    @JoinColumn(referencedColumnName = "id")
     private User user_id;
 
 
-    public int getId() {
-        return id;
+    public Bill(long number_card, String currency, double amoung, User user_id) {
+        this.number_card = number_card;
+        this.currency = currency;
+        this.amoung = amoung;
+        this.user_id = user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public User getUser_id() {
+        return user_id;
+    }
+
+    @Column(nullable = false)
+    private long number_card;
+
+    public long getNumber_card() {
+        return number_card;
+    }
+
+    public void setNumber_card(long number_card) {
+        this.number_card = number_card;
+    }
+
+    public Bill() {
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCurrency() {
@@ -43,14 +64,6 @@ public class Bill implements Serializable {
 
     public void setAmoung(double amoung) {
         this.amoung = amoung;
-    }
-
-    public User getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
     }
 
 }

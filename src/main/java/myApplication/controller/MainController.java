@@ -1,6 +1,5 @@
 package myApplication.controller;
 
-import myApplication.domain.Account;
 import myApplication.domain.User;
 import myApplication.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -31,15 +29,8 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(
-            @AuthenticationPrincipal Account account,
-            @RequestParam String FirstName,
-            @RequestParam String SecondName,
-            @RequestParam int Age, Map<String, Object> model) {
-        User user = new User(Age, FirstName, SecondName);
-        userRepository.save(user);
-        Iterable<User> users = userRepository.findAll();
-        model.put("users", users);
+    public String add(@AuthenticationPrincipal User user, Map<String, Object> model) {
+
         return "main";
     }
 

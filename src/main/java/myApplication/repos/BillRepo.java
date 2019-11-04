@@ -1,7 +1,8 @@
 package myApplication.repos;
 
 import myApplication.domain.Bill;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BillRepo extends CrudRepository<Bill, Long> {
+public interface BillRepo extends JpaRepository<Bill, Long> {
+    Bill findById(long id);
 }

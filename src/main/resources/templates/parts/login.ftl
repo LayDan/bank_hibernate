@@ -12,8 +12,8 @@
 <form method="post">
     <div><label> User Name : <input type="text" name="username" placeholder="Введите ваше login"/> </label></div>
     <div><label> Password: <input type="password" name="password" placeholder="Введите password"/> </label></div>
-    <div><label> FirstName: <input type="text" name="FirstName" placeholder="Введите ваше имя"/> </label></div>
-    <div><label> SecondName: <input type="text" name="SecondName" placeholder="Введите Фамилию"/> </label></div>
+    <div><label> FirstName: <input type="text" name="firstName" placeholder="Введите ваше имя"/> </label></div>
+    <div><label> LastName: <input type="text" name="lastName" placeholder="Введите Фамилию"/> </label></div>
     <div><label> Age: <input type="number" name="Age" placeholder="Введите ваше возраст"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     <div><input type="submit" value="Sign In"/></div>

@@ -1,24 +1,22 @@
 package myApplication.controller;
 
-import myApplication.domain.Account;
-import myApplication.domain.Role;
 import myApplication.domain.User;
-import myApplication.repos.AccountRepo;
 import myApplication.repos.UserRepository;
+import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Controller
 public class RegistrationController {
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
-    private AccountRepo accountRepo;
+    private IUserService userServiceinterface;
 
     @GetMapping("/registration")
     public String registration() {
@@ -26,16 +24,12 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String add(Account account, User user, Map<String, Object> model) {
-        Account accountFromDb = accountRepo.findByUsername(account.getUsername());
-        if (accountFromDb != null) {
+    public String add(User user, Map<String, Object> model) {
+        if (userServiceinterface.findByUsername(user.getUsername())) {
             model.put("infoAboutAccount", "User exists!");
             return "registration";
         } else {
-            account.setActive(true);
-            account.setRoles(Collections.singleton(Role.USER));
-            accountRepo.save(account);
-            userRepository.save(user);
+            userServiceinterface.addUser(user);
             return "redirect:/login";
         }
     }
