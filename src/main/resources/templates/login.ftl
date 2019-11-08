@@ -6,5 +6,4 @@ Login page
 <@L.login "/login" />
 <a href="/registration">Регистрация</a>
 <a href="/main">Назад</a>
-
 </@C.page>

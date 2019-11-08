@@ -1,9 +1,10 @@
 package myApplication.service;
 
 import myApplication.domain.Bill;
+import myApplication.domain.User;
 
 public interface IBillService {
-    Bill addBill(Bill bill);
+    User addBill(Bill bill, User user);
 
     void delete(long id);
 

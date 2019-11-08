@@ -50,8 +50,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ElementCollection(targetClass = Bill.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_bill", joinColumns = @JoinColumn(name = "user_id"))
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Bill> bills;
 
     public Set<Bill> getBills() {

@@ -3,7 +3,7 @@ package myApplication.domain;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "currency_rate")
+@Table(name = "currency_rate")
 public class CurrencyRate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

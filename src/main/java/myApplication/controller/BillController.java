@@ -7,7 +7,9 @@ import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/addbill")
@@ -20,14 +22,15 @@ public class BillController {
 
     @GetMapping()
     public String account(Model model) {
-        model.addAttribute("user",iUserService.getCurrentUser());
+        model.addAttribute("user", iUserService.getCurrentUser());
         return "addbill";
     }
 
-    @PostMapping("/addbill")
-    public String addBill(Bill bill, @RequestParam(name = "user_id") User user, Model model) {
-        iBillService.addBill(bill);
-        model.addAttribute("user", user.getBills());
+    @PostMapping()
+    public String addBill(Bill bill, Model model) {
+        User user = iUserService.getCurrentUser();
+        iBillService.addBill(bill, user);
+        model.addAttribute("bills", iUserService.getAllBill(user));
 
         return "account";
     }

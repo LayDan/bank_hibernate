@@ -1,9 +1,11 @@
 <#macro login path>
-<form action="${path}" method="post">
+<form action="/login" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <div><input type="submit" value="Sign In"/></div>
+    <div>
+        <input type="submit" value="Sign In"/>
+    </div>
 </form>
 </#macro>
 
@@ -16,6 +18,7 @@
     <div><label> LastName: <input type="text" name="lastName" placeholder="Введите Фамилию"/> </label></div>
     <div><label> Age: <input type="number" name="Age" placeholder="Введите ваше возраст"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
     <div><input type="submit" value="Sign In"/></div>
 
 </form>

@@ -1,7 +1,9 @@
 package myApplication.service.impl;
 
 import myApplication.domain.Bill;
+import myApplication.domain.User;
 import myApplication.repos.BillRepo;
+import myApplication.repos.UserRepository;
 import myApplication.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,14 @@ public class BillService implements IBillService {
     @Autowired
     private BillRepo billRepo;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public Bill addBill(Bill bill) {
-        bill.setAmoung(0);
-        Bill newBill = billRepo.saveAndFlush(bill);
-        return newBill;
+    public User addBill(Bill bill, User user) {
+        billRepo.saveAndFlush(bill);
+        user.getBills().add(bill);
+        return userRepository.saveAndFlush(user);
     }
 
     @Override

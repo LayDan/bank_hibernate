@@ -32,9 +32,7 @@ public class UserService implements UserDetailsService, IUserService {
     public User addUser(User user) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        User newUser = userRepository.saveAndFlush(user);
-
-        return newUser;
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -72,8 +70,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public User getCurrentUser() {
-        User a = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return a;
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override
