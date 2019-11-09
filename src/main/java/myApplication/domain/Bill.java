@@ -7,11 +7,12 @@ import javax.persistence.*;
 public class Bill {
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int number_card;
 
     @Column(nullable = false, length = 3)
-    private String currency;
+    @JoinColumn(referencedColumnName = "currency")
+    private Currency currency;
 
     @Column(nullable = false)
     private double amoung;
@@ -21,14 +22,17 @@ public class Bill {
     private User user_id;
 
 
-    public Bill(String currency, double amoung, User user_id) {
+    public Bill(Currency currency, double amoung, User user_id) {
         this.currency = currency;
         this.amoung = amoung;
         this.user_id = user_id;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -48,9 +52,6 @@ public class Bill {
         return number_card;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
 
     public double getAmoung() {
         return amoung;

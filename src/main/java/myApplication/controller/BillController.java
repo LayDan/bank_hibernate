@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/addbill")
 public class BillController {
-    @Autowired
+
     private IUserService iUserService;
-    @Autowired
+
     private IBillService iBillService;
+
+    public BillController(IUserService iUserService, IBillService iBillService) {
+        this.iUserService = iUserService;
+        this.iBillService = iBillService;
+    }
 
 
     @GetMapping()

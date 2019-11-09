@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Bill> bills;
 
     public Set<Bill> getBills() {

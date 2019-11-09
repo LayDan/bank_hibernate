@@ -7,9 +7,6 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/currencyRate">Курсы Валют</a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Аккаунт</a>
@@ -19,6 +16,15 @@
                     <a class="dropdown-item" href="/account">Аккаунт</a>
                     <a class="dropdown-item" href="/usersList">Список пользователей</a>
                     <a class="dropdown-item" href="/registration">Выйти</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Курсы Валют</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/addCurrency">Добавить валюту</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/currencyRate">Посмотреть таблицу</a>
                 </div>
             </li>
         </ul>

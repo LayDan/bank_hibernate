@@ -6,28 +6,36 @@ import javax.persistence.*;
 @Table(name = "currency_rate")
 public class CurrencyRate {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false, length = 3)
-    private String firstValue;
+    private Currency firstValue;
 
     @Column(nullable = false, length = 5)
     private double coefficient;
 
     @Column(nullable = false, length = 3)
-    private String secondValue;
+    private Currency secondValue;
 
     public long getId() {
         return id;
     }
 
-    public String getFirstValue() {
+    public Currency getFirstValue() {
         return firstValue;
     }
 
-    public void setFirstValue(String firstValue) {
+    public void setFirstValue(Currency firstValue) {
         this.firstValue = firstValue;
+    }
+
+    public Currency getSecondValue() {
+        return secondValue;
+    }
+
+    public void setSecondValue(Currency secondValue) {
+        this.secondValue = secondValue;
     }
 
     public double getCoefficient() {
@@ -38,11 +46,4 @@ public class CurrencyRate {
         this.coefficient = coefficient;
     }
 
-    public String getSecondValue() {
-        return secondValue;
-    }
-
-    public void setSecondValue(String secondValue) {
-        this.secondValue = secondValue;
-    }
 }
