@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as C>
 <@C.page>
 Лист счетов :
-<#list currencyRate as c>
+<#list currencyRates as c>
 
 <table>
     <tr>
@@ -9,18 +9,7 @@
         <td><i>${c.coefficient}</i></td>
         <td><i>${c.secondValue}</i></td>
     </tr>
-    <tr>
-        <td><i>${c.firstValue}</i></td>
-        <td><i>${c.coefficient}</i></td>
-        <td><i>${c.secondValue}</i></td>
-    </tr>
-    <tr>
-        <td><i>${c.firstValue}</i></td>
-        <td><i>${c.coefficient}</i></td>
-        <td><i>${c.secondValue}</i></td>
-    </tr>
 </table>
-
 <#else>
 no rates
 </#list>

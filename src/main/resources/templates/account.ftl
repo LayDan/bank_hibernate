@@ -2,7 +2,6 @@
 <@C.page>
 User page
 <>
-<a href="/logout">Logout</a>
 <a href="/addbill">Add bill</a>
 
 Лист счетов :

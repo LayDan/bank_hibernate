@@ -12,7 +12,7 @@ public class Bill {
 
     @Column(nullable = false, length = 3)
     @JoinColumn(referencedColumnName = "currency")
-    private Currency currency;
+    private String currency;
 
     @Column(nullable = false)
     private double amoung;
@@ -22,17 +22,17 @@ public class Bill {
     private User user_id;
 
 
-    public Bill(Currency currency, double amoung, User user_id) {
+    public Bill(String currency, double amoung, User user_id) {
         this.currency = currency;
         this.amoung = amoung;
         this.user_id = user_id;
     }
 
-    public Currency getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 
