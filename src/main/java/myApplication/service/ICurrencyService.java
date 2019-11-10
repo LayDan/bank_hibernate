@@ -7,5 +7,7 @@ public interface ICurrencyService {
 
     void delete(long id);
 
+    Iterable<Currency> findAll();
+
 
 }

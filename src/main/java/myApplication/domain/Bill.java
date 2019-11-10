@@ -8,8 +8,10 @@ public class Bill {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int number_card;
+    private long number_card;
 
+
+    //Currency
     @Column(nullable = false, length = 3)
     @JoinColumn(referencedColumnName = "currency")
     private String currency;
@@ -36,7 +38,7 @@ public class Bill {
         this.currency = currency;
     }
 
-    public void setNumber_card(int number_card) {
+    public void setNumber_card(long number_card) {
         this.number_card = number_card;
     }
 
@@ -48,7 +50,7 @@ public class Bill {
         this.user_id = user_id;
     }
 
-    public int getNumber_card() {
+    public long getNumber_card() {
         return number_card;
     }
 

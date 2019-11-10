@@ -1,8 +1,10 @@
 package myApplication.controller;
 
 import myApplication.domain.Bill;
+import myApplication.domain.Currency;
 import myApplication.domain.User;
 import myApplication.service.IBillService;
+import myApplication.service.ICurrencyService;
 import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +21,19 @@ public class BillController {
 
     private IBillService iBillService;
 
-    public BillController(IUserService iUserService, IBillService iBillService) {
+    private ICurrencyService iCurrencyService;
+
+    public BillController(IUserService iUserService, IBillService iBillService, ICurrencyService iCurrencyService) {
         this.iUserService = iUserService;
         this.iBillService = iBillService;
+        this.iCurrencyService = iCurrencyService;
     }
 
 
     @GetMapping()
     public String account(Model model) {
         model.addAttribute("user", iUserService.getCurrentUser());
+        model.addAttribute("currencys", iCurrencyService.findAll());
         return "addbill";
     }
 

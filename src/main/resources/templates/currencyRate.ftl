@@ -13,6 +13,4 @@
 <#else>
 no rates
 </#list>
-</div>
-
 </@C.page>

@@ -16,7 +16,21 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public Currency addCurrency(Currency currency) {
-        return currencyRepository.saveAndFlush(currency);
+        boolean yes = false;
+        if (currencyRepository.findAll() == null) {
+            return currencyRepository.saveAndFlush(currency);
+        }else {
+            for (Currency currency1 : currencyRepository.findAll()) {
+                if (currency1.getValue().equals(currency.getValue())) {
+                    yes = true;
+                }
+            }
+        }
+        if(yes) {
+            return null;
+        }else {
+            return currencyRepository.saveAndFlush(currency);
+        }
     }
 
     @Override
@@ -24,5 +38,10 @@ public class CurrencyService implements ICurrencyService {
         if (currencyRepository.findById(id).isPresent()) {
             currencyRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public Iterable<Currency> findAll() {
+        return currencyRepository.findAll();
     }
 }

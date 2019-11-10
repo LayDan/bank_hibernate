@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">AnimeSan</a>
+    <a class="navbar-brand" href="/">Bank</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,9 @@
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Курсы Валют</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/addCurrency">Добавить валюту</a>
+                    <a class="dropdown-item" href="/currency">Посмотреть валюту</a>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/addCurrencyRate">Добавить курс</a>
                     <a class="dropdown-item" href="/currencyRate">Посмотреть таблицу</a>
                 </div>
             </li>

@@ -11,4 +11,6 @@ public interface IBillService {
     Bill edit(Bill bill);
 
     Bill findByid(long id);
+
+    User addMoney(long id, double amoung);
 }
