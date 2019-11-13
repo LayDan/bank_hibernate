@@ -16,19 +16,22 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public Currency addCurrency(Currency currency) {
+        if (currency.getValue().length() > 3) {
+            return null;
+        }
         boolean yes = false;
         if (currencyRepository.findAll() == null) {
             return currencyRepository.saveAndFlush(currency);
-        }else {
+        } else {
             for (Currency currency1 : currencyRepository.findAll()) {
                 if (currency1.getValue().equals(currency.getValue())) {
                     yes = true;
                 }
             }
         }
-        if(yes) {
+        if (yes) {
             return null;
-        }else {
+        } else {
             return currencyRepository.saveAndFlush(currency);
         }
     }

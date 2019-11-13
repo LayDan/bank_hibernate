@@ -11,7 +11,6 @@ public class CurrencyRateService implements ICurrencyRateService {
     @Autowired
     private CurrencyRateRepos currencyRateRepos;
 
-
     @Override
     public CurrencyRate add(CurrencyRate currencyRate) {
         return currencyRateRepos.saveAndFlush(currencyRate);

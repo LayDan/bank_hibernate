@@ -17,7 +17,7 @@ public class Currency {
     public Currency() {
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3)
     private String value;
 
     public void setValue(String value) {

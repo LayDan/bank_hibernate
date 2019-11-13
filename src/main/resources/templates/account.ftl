@@ -15,6 +15,7 @@
 
     </table>
 </div>
+
 Лист счетов :
 <#list bills as b>
 <div>

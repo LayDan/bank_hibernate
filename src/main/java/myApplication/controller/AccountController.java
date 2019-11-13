@@ -22,7 +22,9 @@ public class AccountController {
 
     @GetMapping("/account")
     public String accountmain(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("bills", iUserService.getAllBill(user));
+
+        model.addAttribute("bills", iUserService.getCurrentUser().getBills());
+
         return "account";
     }
 

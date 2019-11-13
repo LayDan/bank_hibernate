@@ -2,7 +2,9 @@ package myApplication.service.impl;
 
 import myApplication.domain.Bill;
 import myApplication.domain.Role;
+import myApplication.domain.Transaction;
 import myApplication.domain.User;
+import myApplication.repos.TransactionRepos;
 import myApplication.repos.UserRepository;
 import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class UserService implements UserDetailsService, IUserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TransactionRepos transactionRepos;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
@@ -32,6 +37,12 @@ public class UserService implements UserDetailsService, IUserService {
     public User addUser(User user) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        ////////////////////////////////////////
+        Transaction transaction = new Transaction();
+        transaction.setUser_id(user.getId());
+        transaction.setMessage("New user " + user.getUsername());
+        transactionRepos.saveAndFlush(transaction);
+        ///////////////////////////////////////////////////////
         return userRepository.saveAndFlush(user);
     }
 
@@ -55,7 +66,12 @@ public class UserService implements UserDetailsService, IUserService {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
-
+        /////////////////////////////////////////////////
+        Transaction transaction = new Transaction();
+        transaction.setUser_id(user.getId());
+        transaction.setMessage("User edit " + user.getUsername());
+        transactionRepos.saveAndFlush(transaction);
+        /////////////////////////////////////////////////
         return userRepository.save(user);
     }
 

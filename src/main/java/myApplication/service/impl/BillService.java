@@ -1,8 +1,10 @@
 package myApplication.service.impl;
 
 import myApplication.domain.Bill;
+import myApplication.domain.Transaction;
 import myApplication.domain.User;
 import myApplication.repos.BillRepo;
+import myApplication.repos.TransactionRepos;
 import myApplication.repos.UserRepository;
 import myApplication.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,22 @@ public class BillService implements IBillService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TransactionRepos transactionRepos;
 
     @Override
     public User addBill(Bill bill, User user) {
         billRepo.saveAndFlush(bill);
         user.getBills().add(bill);
+
+        //////////////////////////////////////////
+        Transaction transaction = new Transaction();
+        transaction.setUser_id(user.getId());
+        transaction.setBill_id(bill.getNumber_card());
+        transaction.setMessage("New bill");
+        transactionRepos.saveAndFlush(transaction);
+        ///////////////////////////////////////////
+
         return userRepository.saveAndFlush(user);
     }
 
@@ -47,14 +60,22 @@ public class BillService implements IBillService {
             User user = userRepository.findByUsername(billRepo.findById(id).getUser_id().getUsername());
             Set<Bill> bills = user.getBills();
 
-
             for (Bill b : bills) {
                 if (b.getNumber_card() == id) {
                     b.setAmoung(amoung + b.getAmoung());
                     billRepo.save(b);
                 }
             }
-            return userRepository.save(user);
+            billRepo.saveAndFlush(billRepo.findById(id));
+            //////////////////////////////////////////
+            Transaction transaction = new Transaction();
+            transaction.setUser_id(user.getId());
+            transaction.setBill_id(id);
+            transaction.setMessage("AddMoney");
+            transactionRepos.saveAndFlush(transaction);
+            ///////////////////////////////////////////
+
+            return userRepository.saveAndFlush(user);
         }
         return null;
     }
