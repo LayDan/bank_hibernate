@@ -1,7 +1,7 @@
 package myApplication.controller;
 
 import myApplication.domain.Currency;
-import myApplication.domain.CurrencyRate;
+import myApplication.domain.Currency_rate;
 import myApplication.service.ICurrencyRateService;
 import myApplication.service.ICurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class MainController {
     }
 
     @PostMapping("/addCurrencyRate")
-    public String add(Model model, CurrencyRate currencyRate) {
+    public String add(Model model, Currency_rate currencyRate) {
         iCurrencyRateService.add(currencyRate);
         model.addAttribute("currencys", iCurrencyService.findAll());
         model.addAttribute("currencyRates", iCurrencyRateService.findAll());

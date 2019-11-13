@@ -3,35 +3,35 @@ package myApplication.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "currency_rate")
-public class CurrencyRate {
+@Table
+public class Currency_rate {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private long id;
 
 
-    public CurrencyRate(String firstValue, double coefficient, String secondValue) {
+    @Column(nullable = false)
+    private String firstValue;
+
+    @Column(nullable = false)
+    private double coefficient;
+
+    @Column(nullable = false)
+    private String secondValue;
+
+
+    public long getCurrency_id() {
+        return id;
+    }
+
+    public Currency_rate(String firstValue, double coefficient, String secondValue) {
         this.firstValue = firstValue;
         this.coefficient = coefficient;
         this.secondValue = secondValue;
     }
 
-    public CurrencyRate() {
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false, length = 3)
-    private String firstValue;
-
-    @Column(nullable = false, length = 4)
-    private double coefficient;
-
-    @Column(nullable = false, length = 3)
-    private String secondValue;
-
-    public long getId() {
-        return id;
-    }
 
     public String getFirstValue() {
         return firstValue;
@@ -39,14 +39,6 @@ public class CurrencyRate {
 
     public void setFirstValue(String firstValue) {
         this.firstValue = firstValue;
-    }
-
-    public String getSecondValue() {
-        return secondValue;
-    }
-
-    public void setSecondValue(String secondValue) {
-        this.secondValue = secondValue;
     }
 
     public double getCoefficient() {
@@ -57,4 +49,14 @@ public class CurrencyRate {
         this.coefficient = coefficient;
     }
 
+    public String getSecondValue() {
+        return secondValue;
+    }
+
+    public void setSecondValue(String secondValue) {
+        this.secondValue = secondValue;
+    }
+
+    public Currency_rate() {
+    }
 }

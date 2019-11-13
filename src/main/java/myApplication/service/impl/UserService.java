@@ -39,8 +39,8 @@ public class UserService implements UserDetailsService, IUserService {
         user.setRoles(Collections.singleton(Role.USER));
         ////////////////////////////////////////
         Transaction transaction = new Transaction();
+        transaction.setMessage("New user ");
         transaction.setUser_id(user.getId());
-        transaction.setMessage("New user " + user.getUsername());
         transactionRepos.saveAndFlush(transaction);
         ///////////////////////////////////////////////////////
         return userRepository.saveAndFlush(user);

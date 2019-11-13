@@ -1,6 +1,6 @@
 package myApplication.service.impl;
 
-import myApplication.domain.CurrencyRate;
+import myApplication.domain.Currency_rate;
 import myApplication.repos.CurrencyRateRepos;
 import myApplication.service.ICurrencyRateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ public class CurrencyRateService implements ICurrencyRateService {
     private CurrencyRateRepos currencyRateRepos;
 
     @Override
-    public CurrencyRate add(CurrencyRate currencyRate) {
+    public Currency_rate add(Currency_rate currencyRate) {
         return currencyRateRepos.saveAndFlush(currencyRate);
     }
 
     @Override
-    public Iterable<CurrencyRate> findAll() {
+    public Iterable<Currency_rate> findAll() {
         return currencyRateRepos.findAll();
     }
 }
