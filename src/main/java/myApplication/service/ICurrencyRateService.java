@@ -1,9 +1,9 @@
 package myApplication.service;
 
-import myApplication.domain.Currency_rate;
+import myApplication.domain.Rates;
 
 public interface ICurrencyRateService {
-    Currency_rate add(Currency_rate currencyRate);
+    void add(String first, String second, double x);
 
-    Iterable<Currency_rate> findAll();
+    Iterable<Rates> findAll();
 }

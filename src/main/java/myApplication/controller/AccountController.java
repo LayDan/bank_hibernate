@@ -2,6 +2,7 @@ package myApplication.controller;
 
 import myApplication.domain.User;
 import myApplication.service.IBillService;
+import myApplication.service.ICurrencyService;
 import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,32 +19,59 @@ public class AccountController {
     private IUserService iUserService;
     @Autowired
     private IBillService iBillService;
+    @Autowired
+    private ICurrencyService iCurrencyService;
 
 
     @GetMapping("/account")
     public String accountmain(Model model, @AuthenticationPrincipal User user) {
-
-        model.addAttribute("bills", iUserService.getCurrentUser().getBills());
-
+        model.addAttribute("userInfo", user);
+        model.addAttribute("bills", iUserService.getAllBill(user));
         return "account";
     }
 
     ///////////////////////////////////////////add money
-    @GetMapping("/addMoney")
-    public String Money(Model model, @AuthenticationPrincipal User user) {
-        return "addMoney";
+    ////////////////////////////////////////////////////Transfer
+    @GetMapping("/transfer")
+    public String transfer(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("numberOfCards", user.getBills());
+        model.addAttribute("user", user);
+        return "transfer";
     }
 
-    @PostMapping("/addMoney")
-    public String addMoney(@AuthenticationPrincipal User user, Model model, @RequestParam long number_card, @RequestParam double amoung) {
-        User user1 = iBillService.addMoney(number_card, amoung);
-        if (user1.getUsername().equals(user.getUsername())) {
-            model.addAttribute("bills", iUserService.getAllBill(user1));
-        } else {
-            model.addAttribute("bills", iUserService.getAllBill(user));
-        }
+    @PostMapping("/transfer")
+    public String transferMoney(@AuthenticationPrincipal User user, Model model,
+                                @RequestParam long number_card,
+                                @RequestParam long self_number_card,
+                                @RequestParam double amoung
+    ) {
+        iBillService.transfer(number_card, amoung, self_number_card, user);
+        model.addAttribute("numberOfCards", user.getBills());
+        model.addAttribute("userInfo", user);
+        model.addAttribute("bills", iUserService.getAllBill(user));
         return "account";
     }
 
+    ///////////////////////////////////////////////////Convert
+    @GetMapping("/convert")
+    public String convert(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("numberOfCards", user.getBills());
+        model.addAttribute("user", user);
+        model.addAttribute("currencys", iCurrencyService.findAll());
+        return "convert";
+    }
+
+    @PostMapping("/convert")
+    public String convertMoney(@AuthenticationPrincipal User user, Model model,
+                               @RequestParam long number_card,
+                               @RequestParam String currency
+    ) {
+        iBillService.convert_to_newCurrency(number_card, currency);
+
+        model.addAttribute("currencys", iCurrencyService.findAll());
+        model.addAttribute("userInfo", user);
+        model.addAttribute("bills", iUserService.getAllBill(user));
+        return "account";
+    }
 
 }

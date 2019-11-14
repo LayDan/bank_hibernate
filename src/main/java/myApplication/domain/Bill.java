@@ -12,9 +12,9 @@ public class Bill {
 
 
     //Currency
-    @Column(nullable = false, length = 3)
-    @JoinColumn(referencedColumnName = "currency")
-    private String currency;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "valute")
+    private Currency currency;
 
     @Column(nullable = false)
     private double amoung;
@@ -24,17 +24,17 @@ public class Bill {
     private User user_id;
 
 
-    public Bill(String currency, double amoung, User user_id) {
+    public Bill(Currency currency, double amoung, User user_id) {
         this.currency = currency;
         this.amoung = amoung;
         this.user_id = user_id;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

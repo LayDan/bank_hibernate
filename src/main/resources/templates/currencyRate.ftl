@@ -1,13 +1,13 @@
 <#import "parts/common.ftl" as C>
 <@C.page>
-Лист счетов :
+Таблица рейтинга валют :
 <#list currencyRates as c>
 
 <table>
     <tr>
-        <td><i>${c.firstValue}</i></td>
-        <td><i>${c.coefficient}</i></td>
-        <td><i>${c.secondValue}</i></td>
+        <td><i>${c.first.value}</i></td>
+        <td><i>${c.x}</i></td>
+        <td><i>${c.second.value}</i></td>
     </tr>
 </table>
 <#else>

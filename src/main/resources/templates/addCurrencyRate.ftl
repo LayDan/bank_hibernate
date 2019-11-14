@@ -2,18 +2,18 @@
 <@C.page>
 <div>
     <form method="post">
-        <select name="firstValue">
+        <select name="first">
             <#list currencys as currency>
-            <option name="firstValue">${currency.value}</option>
+            <option name="first">${currency.value}</option>
             <#else>
             none
         </#list>
         </select>
         <br>
-        <input type="text" name="coefficient" placeholder="К"/> <br>
-        <select name="secondValue">
+        <input type="text" name="x" placeholder="К"/> <br>
+        <select name="second">
             <#list currencys as currency>
-            <option name="secondValue">${currency.value}</option>
+            <option name="second">${currency.value}</option>
             <#else>
             none
         </#list>

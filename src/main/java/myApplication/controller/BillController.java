@@ -1,17 +1,16 @@
 package myApplication.controller;
 
-import myApplication.domain.Bill;
-import myApplication.domain.Currency;
 import myApplication.domain.User;
 import myApplication.service.IBillService;
 import myApplication.service.ICurrencyService;
 import myApplication.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/addbill")
@@ -38,11 +37,28 @@ public class BillController {
     }
 
     @PostMapping()
-    public String addBill(Bill bill, Model model) {
+    public String addBill(@RequestParam String currency, @RequestParam double amoung, Model model) {
         User user = iUserService.getCurrentUser();
-        iBillService.addBill(bill, user);
+        iBillService.addBill(currency, amoung, user);
+        model.addAttribute("userInfo", iUserService.getCurrentUser());
         model.addAttribute("bills", iUserService.getAllBill(user));
 
         return "account";
     }
+
+    @GetMapping("/addMoney")
+    public String Money(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("userInfo", user);
+        return "addMoney";
+    }
+
+    @PostMapping("/addMoney")
+    public String addMoney(@AuthenticationPrincipal User user, Model model, @RequestParam long number_card, @RequestParam double amoung) {
+        iBillService.addMoney(number_card, amoung);
+        model.addAttribute("userInfo", user);
+        model.addAttribute("bills", iUserService.getAllBill(user));
+        return "account";
+    }
+
+
 }

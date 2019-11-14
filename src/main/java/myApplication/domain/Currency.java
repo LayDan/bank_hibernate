@@ -1,27 +1,29 @@
 package myApplication.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "currency")
-public class Currency {
+@Table(name = "currencys")
+//Сериалайзибл нужен для отображения в currencyRate.ftl
+public class Currency implements Serializable {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     public Currency(String value) {
-        this.value = value;
+        this.valute = value;
     }
 
     public Currency() {
     }
 
-    @Column(nullable = false, length = 3)
-    private String value;
+    @Column(name = "valute")
+    private String valute;
 
     public void setValue(String value) {
-        this.value = value;
+        this.valute = value;
     }
 
     public long getId() {
@@ -29,6 +31,6 @@ public class Currency {
     }
 
     public String getValue() {
-        return value;
+        return valute;
     }
 }

@@ -2,25 +2,29 @@
 <@C.page>
 <div>User page</div>
 
+<span>${userInfo.username}</span>
 <div>
-    <table>
-        <tr>
-            <td>
-                <a href="/addbill">Add bill</a>
-            </td>
-            <td>
-                <a href="/addMoney">Add money to bill</a>
-            </td>
-        </tr>
+    <span>${userInfo.firstName}</span>
+    <span>${userInfo.lastName}</span>
+    <span>${userInfo.age}</span>
+</div>
+<div>
 
-    </table>
+    <a href="/addbill">Add bill</a> <br>
+
+    <a href="/addMoney">Add money to bill</a><br>
+
+    <a href="/transfer">перевести деньги на другой счёт</a><br>
+
+    <a href="/convert">Конвертация</a><br>
+
 </div>
 
 Лист счетов :
 <#list bills as b>
 <div>
     <i>${b.number_card}</i>
-    <i>${b.currency}</i>
+    <i>${b.currency.value}</i>
     <i>${b.amoung}</i>
 </div>
 <#else>
