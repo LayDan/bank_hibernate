@@ -74,4 +74,14 @@ public class AccountController {
         return "account";
     }
 
+    ///////////////////////////////////////////////////////convertAllToUAH
+    @GetMapping("/convertAllToUAH")
+    public String convertAllToUAH(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("amoung", iBillService.convertAllMoneyToUAH(user));
+        model.addAttribute("userInfo", user);
+        model.addAttribute("currencys", iCurrencyService.findAll());
+        model.addAttribute("bills", iUserService.getAllBill(user));
+        return "account";
+    }
+
 }

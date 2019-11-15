@@ -5,7 +5,6 @@ import myApplication.domain.User;
 import myApplication.repos.UserRepository;
 import myApplication.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

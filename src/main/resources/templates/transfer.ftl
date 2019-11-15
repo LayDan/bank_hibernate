@@ -5,7 +5,7 @@ User page
     <form method="post">
 
         <input type="number" name="number_card" placeholder="номер карти отправки"/> <br>
-        <input type="number" name="amoung" placeholder="деньги"/><br>
+        <input type="text" name="amoung" placeholder="деньги"/><br>
         <br>
         <select name="self_number_card">
             <#list numberOfCards as card>
@@ -19,6 +19,7 @@ User page
         <div>
             <input type="submit" value="Добавить"/>
         </div>
+
     </form>
 </div>
 

@@ -37,13 +37,14 @@ public class UserService implements UserDetailsService, IUserService {
     public User addUser(User user) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        userRepository.saveAndFlush(user);
         ////////////////////////////////////////
         Transaction transaction = new Transaction();
         transaction.setMessage("New user ");
         transaction.setUser_id(user.getId());
         transactionRepos.saveAndFlush(transaction);
         ///////////////////////////////////////////////////////
-        return userRepository.saveAndFlush(user);
+        return user;
     }
 
     @Override

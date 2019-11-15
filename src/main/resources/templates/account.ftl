@@ -1,5 +1,11 @@
 <#import "parts/common.ftl" as C>
 <@C.page>
+
+<#if amoung??>
+${amoung} UAH
+<#else>
+</#if>
+
 <div>User page</div>
 
 <span>${userInfo.username}</span>
@@ -17,6 +23,8 @@
     <a href="/transfer">перевести деньги на другой счёт</a><br>
 
     <a href="/convert">Конвертация</a><br>
+
+    <a href="/convertAllToUAH">Сумма всех счетов в UAH</a><br>
 
 </div>
 
