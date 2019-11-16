@@ -71,7 +71,7 @@ public class AccountController {
         model.addAttribute("currencys", iCurrencyService.findAll());
         model.addAttribute("userInfo", user);
         model.addAttribute("bills", iUserService.getAllBill(user));
-        return "account";
+        return "redirect:/account";
     }
 
     ///////////////////////////////////////////////////////convertAllToUAH

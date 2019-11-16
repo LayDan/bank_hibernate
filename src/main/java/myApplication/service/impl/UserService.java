@@ -7,7 +7,6 @@ import myApplication.domain.User;
 import myApplication.repos.TransactionRepos;
 import myApplication.repos.UserRepository;
 import myApplication.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,11 +21,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService, IUserService {
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
     private TransactionRepos transactionRepos;
+
+    public UserService(UserRepository userRepository, TransactionRepos transactionRepos) {
+        this.userRepository = userRepository;
+        this.transactionRepos = transactionRepos;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -92,6 +95,8 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public Iterable<Bill> getAllBill(User user) {
-        return user.getBills();
+        User user1 = userRepository.findByUsername(user.getUsername());
+        String s = "";
+        return user1.getBills();
     }
 }

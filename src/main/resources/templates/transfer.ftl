@@ -16,6 +16,7 @@ User page
         </select>
         <input type="hidden" value="${user.id}" name="user_id"/><br>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
+
         <div>
             <input type="submit" value="Добавить"/>
         </div>
