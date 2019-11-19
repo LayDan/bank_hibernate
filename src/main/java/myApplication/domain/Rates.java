@@ -1,8 +1,13 @@
 package myApplication.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "rates")
 public class Rates {
 
@@ -12,32 +17,17 @@ public class Rates {
     private long id;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "valute")
     private Currency first;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "valute")
     private Currency second;
 
     @Column(nullable = false)
     private double x;
 
-    public Currency getFirst() {
-        return first;
-    }
-
-    public void setFirst(Currency first) {
-        this.first = first;
-    }
-
-    public Currency getSecond() {
-        return second;
-    }
-
-    public void setSecond(Currency second) {
-        this.second = second;
-    }
 
     public Rates(Currency first, Currency second, double x) {
         this.first = first;
@@ -46,19 +36,5 @@ public class Rates {
     }
 
     public Rates() {
-    }
-
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-
-    public double getX() {
-        return x;
     }
 }

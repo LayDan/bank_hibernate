@@ -7,11 +7,14 @@ import myApplication.domain.User;
 import myApplication.repos.TransactionRepos;
 import myApplication.repos.UserRepository;
 import myApplication.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,14 +25,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService, IUserService {
 
+    @Autowired
     private UserRepository userRepository;
-
+    @Autowired
     private TransactionRepos transactionRepos;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, TransactionRepos transactionRepos) {
-        this.userRepository = userRepository;
-        this.transactionRepos = transactionRepos;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,6 +42,7 @@ public class UserService implements UserDetailsService, IUserService {
     public User addUser(User user) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.saveAndFlush(user);
         ////////////////////////////////////////
         Transaction transaction = new Transaction();
@@ -89,14 +92,16 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
+    @Transactional
     public User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+
     @Override
+    @Transactional
     public Iterable<Bill> getAllBill(User user) {
         User user1 = userRepository.findByUsername(user.getUsername());
-        String s = "";
         return user1.getBills();
     }
 }

@@ -13,7 +13,7 @@ public interface IBillService {
 
     Bill findByid(long id);
 
-    User addMoney(long id, double amoung);
+    void addMoney(long id, double amoung);
 
     void transfer(long number_card, double amoung, long self_number_card, User user);
 

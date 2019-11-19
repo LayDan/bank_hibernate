@@ -1,5 +1,7 @@
 package myApplication.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,7 +10,9 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Getter
+@Setter
+@Table(name = "user_info")
 public class User implements UserDetails {
 
     public User(String firstName, String lastName, int age, String username, String password) {
@@ -50,64 +54,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Bill> bills;
 
-    public Set<Bill> getBills() {
-        return bills;
-    }
-
-    public void setBills(Set<Bill> bills) {
-        this.bills = bills;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
 
     public boolean isActive() {
         return active;

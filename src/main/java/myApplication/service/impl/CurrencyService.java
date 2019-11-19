@@ -16,10 +16,10 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public void addCurrency(Currency currency) {
-        if (currency.getValue().length() == 3) {
+        if (currency.getValute().length() == 3) {
             boolean yes = false;
             boolean cheek = false;
-            char[] arr = currency.getValue().toCharArray();
+            char[] arr = currency.getValute().toCharArray();
             for (char a : arr) {
                 if ((int) a < 65 || (int) a > 90) {
                     cheek = true;
@@ -31,7 +31,7 @@ public class CurrencyService implements ICurrencyService {
                     currencyRepository.saveAndFlush(currency);
                 } else {
                     for (Currency currency1 : currencyRepository.findAll()) {
-                        if (currency1.getValue().equals(currency.getValue())) {
+                        if (currency1.getValute().equals(currency.getValute())) {
                             yes = true;
                         }
                     }

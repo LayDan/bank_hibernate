@@ -5,9 +5,9 @@
 
 <table>
     <tr>
-        <td><i>${c.first.value}</i></td>
+        <td><i>${c.first.valute}</i></td>
         <td><i>${c.x}</i></td>
-        <td><i>${c.second.value}</i></td>
+        <td><i>${c.second.valute}</i></td>
     </tr>
 </table>
 <#else>

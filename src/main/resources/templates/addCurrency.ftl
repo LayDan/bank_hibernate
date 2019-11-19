@@ -2,7 +2,7 @@
 <@C.page>
 <div>
     <form method="post">
-        <input type="text" name="value" placeholder="Валюта"/> <br>
+        <input type="text" name="valute" placeholder="Валюта"/> <br>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <div>
             <input type="submit" value="Добавить"/>

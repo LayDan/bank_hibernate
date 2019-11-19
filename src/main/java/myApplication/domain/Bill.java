@@ -1,15 +1,21 @@
 package myApplication.domain;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "bill")
 public class Bill {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long number_card;
-
 
     //Currency
     @OneToOne(fetch = FetchType.EAGER)
@@ -21,6 +27,7 @@ public class Bill {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
+    @NonNull
     private User user_id;
 
 
@@ -28,39 +35,6 @@ public class Bill {
         this.currency = currency;
         this.amoung = amoung;
         this.user_id = user_id;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public void setNumber_card(long number_card) {
-        this.number_card = number_card;
-    }
-
-    public void setAmoung(double amoung) {
-        this.amoung = amoung;
-    }
-
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
-    }
-
-    public long getNumber_card() {
-        return number_card;
-    }
-
-
-    public double getAmoung() {
-        return amoung;
-    }
-
-    public User getUser_id() {
-        return user_id;
     }
 
     public Bill() {

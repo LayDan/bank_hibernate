@@ -9,11 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/addbill")
+
 public class BillController {
 
     private IUserService iUserService;
@@ -28,18 +27,19 @@ public class BillController {
         this.iCurrencyService = iCurrencyService;
     }
 
-
-    @GetMapping()
+    @GetMapping("/addbill")
     public String account(Model model) {
-        model.addAttribute("user", iUserService.getCurrentUser());
+
         model.addAttribute("currencys", iCurrencyService.findAll());
+        model.addAttribute("user", iUserService.getCurrentUser());
         return "addbill";
     }
 
-    @PostMapping()
+    @PostMapping("/addbill")
     public String addBill(@RequestParam String currency, @RequestParam double amoung, Model model) {
         User user = iUserService.getCurrentUser();
         iBillService.addBill(currency, amoung, user);
+
         model.addAttribute("userInfo", iUserService.getCurrentUser());
         model.addAttribute("bills", iUserService.getAllBill(user));
 

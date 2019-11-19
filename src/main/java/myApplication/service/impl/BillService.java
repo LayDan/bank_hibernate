@@ -5,9 +5,9 @@ import myApplication.repos.*;
 import myApplication.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BillService implements IBillService {
@@ -27,6 +27,7 @@ public class BillService implements IBillService {
     private CurrencyRateRepos currencyRateRepos;
 
     @Override
+    @Transactional
     public User addBill(String currency, double amoung, User user) {
         if (amoung >= 0 && user != null) {
             Currency valute = currencyRepository.findByValute(currency);
@@ -60,29 +61,20 @@ public class BillService implements IBillService {
     }
 
     @Override
-    public User addMoney(long id, double amoung) {
-        if (billRepo.findById(id) != null) {
-            User user = userRepository.findByUsername(billRepo.findById(id).getUser_id().getUsername());
-            Set<Bill> bills = user.getBills();
 
-            for (Bill b : bills) {
-                if (b.getNumber_card() == id) {
-                    b.setAmoung(amoung + b.getAmoung());
-                    billRepo.save(b);
-                }
-            }
-            billRepo.saveAndFlush(billRepo.findById(id));
+    public void addMoney(long id, double amoung) {
+        if (billRepo.findById(id) != null) {
+            Bill bill = billRepo.findById(id);
+            bill.setAmoung(amoung + bill.getAmoung());
+            billRepo.save(bill);
             //////////////////////////////////////////
             Transaction transaction = new Transaction();
-            transaction.setUser_id(user.getId());
+            transaction.setUser_id(bill.getUser_id().getId());
             transaction.setBill_id(id);
             transaction.setMessage("AddMoney");
             transactionRepos.saveAndFlush(transaction);
             ///////////////////////////////////////////
-
-            return userRepository.saveAndFlush(user);
         }
-        return null;
     }
 
     @Override
@@ -129,12 +121,12 @@ public class BillService implements IBillService {
         if (bill != null) {
             List<Rates> all = currencyRateRepos.findAll();
             for (Rates a : all) {
-                if (a.getFirst().getValue().equals(bill.getCurrency().getValue()) && a.getSecond().getValue().equals(currency)) {
+                if (a.getFirst().getValute().equals(bill.getCurrency().getValute()) && a.getSecond().getValute().equals(currency)) {
                     rates = a;
                     multicast = rates.getX();
                     break;
                 }
-                if (a.getFirst().getValue().equals(currency) && a.getSecond().getValue().equals(bill.getCurrency().getValue())) {
+                if (a.getFirst().getValute().equals(currency) && a.getSecond().getValute().equals(bill.getCurrency().getValute())) {
                     rates = a;
                     multicast = 1 / rates.getX();
                     break;
@@ -142,6 +134,7 @@ public class BillService implements IBillService {
             }
 
             if (rates != null && multicast != 0) {
+
                 bill.setAmoung(bill.getAmoung() * multicast);
                 bill.setCurrency(newCurrency);
                 billRepo.save(bill);
@@ -164,12 +157,12 @@ public class BillService implements IBillService {
         List<Rates> all = currencyRateRepos.findAll();
         if (bill.getCurrency() != currency) {
             for (Rates a : all) {
-                if (a.getFirst().getValue().equals(bill.getCurrency().getValue()) && a.getSecond().getValue().equals(currency.getValue())) {
+                if (a.getFirst().getValute().equals(bill.getCurrency().getValute()) && a.getSecond().getValute().equals(currency.getValute())) {
                     rates = a;
                     multicast = rates.getX();
                     break;
                 }
-                if (a.getFirst().getValue().equals(currency.getValue()) && a.getSecond().getValue().equals(bill.getCurrency().getValue())) {
+                if (a.getFirst().getValute().equals(currency.getValute()) && a.getSecond().getValute().equals(bill.getCurrency().getValute())) {
                     rates = a;
                     multicast = 1 / rates.getX();
                     break;
@@ -190,13 +183,14 @@ public class BillService implements IBillService {
 
     @Override
     public double convertAllMoneyToUAH(User user) {
+        user = userRepository.findByUsername(user.getUsername());
         double amoung = 0;
         Currency currency = currencyRepository.findByValute("UAH");
         if (currency != null && user != null) {
             if (user.getBills().size() != 0) {
                 Iterable<Bill> bills = user.getBills();
                 for (Bill b : bills) {
-                    if (b.getCurrency().getValue().equals("UAH")) {
+                    if (b.getCurrency().getValute().equals("UAH")) {
                         amoung += b.getAmoung();
                     } else {
                         amoung += convertMoney(b, currency, b.getAmoung());

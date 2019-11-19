@@ -28,7 +28,7 @@ public class CurrencyRateService implements ICurrencyRateService {
                 currencyRateRepos.saveAndFlush(rates);
             } else {
                 for (Rates a : currencyRateRepos.findAll()) {
-                    if (a.getFirst().getValue().equals(first) && a.getSecond().getValue().equals(second) && a.getX() == x) {
+                    if (a.getFirst().getValute().equals(first) && a.getSecond().getValute().equals(second) && a.getX() == x) {
                         b = true;
                     }
                 }

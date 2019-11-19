@@ -32,7 +32,7 @@ ${amoung} UAH
 <#list bills as b>
 <div>
     <i>${b.number_card}</i>
-    <i>${b.currency.value}</i>
+    <i>${b.currency.valute}</i>
     <i>${b.amoung}</i>
 </div>
 <#else>

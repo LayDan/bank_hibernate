@@ -14,7 +14,7 @@ User page
 
         <select name="currency">
             <#list currencys as currency>
-            <option name="currency">${currency.value}</option>
+            <option name="currency">${currency.valute}</option>
             <#else>
             none
         </#list>

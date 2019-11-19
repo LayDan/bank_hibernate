@@ -4,7 +4,7 @@
     <form method="post">
         <select name="first">
             <#list currencys as currency>
-            <option name="first">${currency.value}</option>
+            <option name="first">${currency.valute}</option>
             <#else>
             none
         </#list>
@@ -13,7 +13,7 @@
         <input type="text" name="x" placeholder="К"/> <br>
         <select name="second">
             <#list currencys as currency>
-            <option name="second">${currency.value}</option>
+            <option name="second">${currency.valute}</option>
             <#else>
             none
         </#list>
