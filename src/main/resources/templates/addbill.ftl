@@ -15,7 +15,7 @@ User page
 
         <!--        <input type="text" name="currency" placeholder="Валюта"/> <br>-->
         <input type="number" name="amoung" placeholder="деньги"/><br>
-        <input type="hidden" value="${user.id}" name="user_id"/><br>
+        <input type="hidden" value="${user.id}" name="userId"/><br>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <div>
             <input type="submit" value="Добавить"/>

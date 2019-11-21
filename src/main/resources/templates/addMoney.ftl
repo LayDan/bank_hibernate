@@ -2,7 +2,7 @@
 <@C.page>
 <div>
     <form method="post">
-        <input type="text" name="number_card" placeholder="NumberCard"/> <br>
+        <input type="text" name="numberCard" placeholder="NumberCard"/> <br>
         <input type="number" name="amoung" step="any" placeholder="Amoung"/> <br>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <div>

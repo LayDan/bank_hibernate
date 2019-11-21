@@ -4,9 +4,9 @@ User page
 <div>
     <form method="post">
 
-        <select name="number_card">
+        <select name="numberCard">
             <#list numberOfCards as card>
-            <option name="number_card">${card.number_card}</option>
+            <option name="numberCard">${card.numberCard}</option>
             <#else>
             none
         </#list>
@@ -19,7 +19,7 @@ User page
             none
         </#list>
         </select>
-        <input type="hidden" value="${user.id}" name="user_id"/><br>
+        <input type="hidden" value="${user.id}" name="userId"/><br>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <div>
             <input type="submit" value="Добавить"/>
