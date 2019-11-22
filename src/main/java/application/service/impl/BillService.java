@@ -3,11 +3,13 @@ package application.service.impl;
 import application.domain.*;
 import application.repos.*;
 import application.service.IBillService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class BillService implements IBillService {
 
@@ -21,27 +23,24 @@ public class BillService implements IBillService {
 
     private CurrencyRateRepos currencyRateRepos;
 
-    public BillService(BillRepo billRepo, CurrencyRepository currencyRepository, UserRepository userRepository, TransactionRepos transactionRepos, CurrencyRateRepos currencyRateRepos) {
-        this.billRepo = billRepo;
-        this.currencyRepository = currencyRepository;
-        this.userRepository = userRepository;
-        this.transactionRepos = transactionRepos;
-        this.currencyRateRepos = currencyRateRepos;
-    }
-
     @Override
     @Transactional
     public User addBill(String currency, double amoung, User user) {
         if (amoung >= 0 && user != null) {
             Currency valute = currencyRepository.findByValute(currency);
-            Bill bill = new Bill(valute, amoung, user);
+            Bill bill = Bill.builder()
+                    .amoung(amoung)
+                    .currency(valute)
+                    .userId(user)
+                    .build();
             billRepo.saveAndFlush(bill);
             user.getBills().add(bill);
             //////////////////////////////////////////
-            Transaction transaction = new Transaction();
-            transaction.setUserId(user.getId());
-            transaction.setBillId(bill.getNumberCard());
-            transaction.setMessage("New bill");
+            Transaction transaction = Transaction.builder()
+                    .message("New bill")
+                    .billId(bill.getNumberCard())
+                    .userId(user.getId())
+                    .build();
             transactionRepos.saveAndFlush(transaction);
             //////////////////////////////////////////
             return userRepository.save(user);
@@ -53,10 +52,11 @@ public class BillService implements IBillService {
     public void delete(long id) {
         Bill bill = billRepo.findById(id);
         billRepo.deleteById(id);
-        Transaction transaction = new Transaction();
-        transaction.setUserId(bill.getUserId().getId());
-        transaction.setBillId(bill.getNumberCard());
-        transaction.setMessage("Delete bill");
+        Transaction transaction = Transaction.builder()
+                .message("Delete bill")
+                .billId(id)
+                .userId(bill.getUserId().getId())
+                .build();
         transactionRepos.saveAndFlush(transaction);
     }
 
@@ -77,13 +77,13 @@ public class BillService implements IBillService {
             Bill bill = billRepo.findById(id);
             bill.setAmoung(amoung + bill.getAmoung());
             billRepo.save(bill);
-            //////////////////////////////////////////
-            Transaction transaction = new Transaction();
-            transaction.setUserId(bill.getUserId().getId());
-            transaction.setBillId(id);
-            transaction.setMessage("AddMoney");
+
+            Transaction transaction = Transaction.builder()
+                    .message("AddMoney")
+                    .billId(id)
+                    .userId(bill.getUserId().getId())
+                    .build();
             transactionRepos.saveAndFlush(transaction);
-            ///////////////////////////////////////////
         }
     }
 
@@ -106,17 +106,20 @@ public class BillService implements IBillService {
             userRepository.save(self.getUserId());
 
             //////////////////////////////////////////  Transaction
-            Transaction transaction1 = new Transaction();
-            transaction1.setUserId(user.getId());
-            transaction1.setBillId(self.getNumberCard());
-            transaction1.setMessage("transfer to numberCard :" + bill.getNumberCard());
-            transactionRepos.saveAndFlush(transaction1);
 
-            Transaction transaction2 = new Transaction();
-            transaction2.setBillId(bill.getNumberCard());
-            transaction2.setMessage("add Money from numberCard :" + self.getNumberCard());
-            transactionRepos.saveAndFlush(transaction2);
-            //////////////////////////////////////////////////////////////////////////////////
+            Transaction transaction = Transaction.builder()
+                    .message("transfer to card")
+                    .billId(self.getNumberCard())
+                    .userId(user.getId())
+                    .build();
+            transactionRepos.saveAndFlush(transaction);
+
+            Transaction transaction1 = Transaction.builder()
+                    .message("add Money")
+                    .billId(bill.getNumberCard())
+                    .userId(user.getId())
+                    .build();
+            transactionRepos.saveAndFlush(transaction1);
         }
     }
 
@@ -147,12 +150,13 @@ public class BillService implements IBillService {
                 billRepo.save(bill);
 
                 //////////////////////////////////////////  Transaction
-                Transaction transaction1 = new Transaction();
-                transaction1.setUserId(bill.getUserId().getId());
-                transaction1.setBillId(bill.getNumberCard());
-                transaction1.setMessage("edit currency");
-                transactionRepos.saveAndFlush(transaction1);
-                //////////////////////////////////////////////////////////////////////////////////
+
+                Transaction transaction = Transaction.builder()
+                        .message("edit currency")
+                        .billId(bill.getUserId().getId())
+                        .userId(bill.getNumberCard())
+                        .build();
+                transactionRepos.saveAndFlush(transaction);
             }
         }
     }

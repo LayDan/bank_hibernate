@@ -10,7 +10,7 @@ public interface IUserService {
 
     void deleteUserById(long id);
 
-    User editUser(User user, String username, Map<String, String> form);
+    User editUser(long id, String username, Map<String, String> form);
 
     boolean findByUsername(String username);
 

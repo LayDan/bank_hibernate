@@ -5,8 +5,10 @@ import application.domain.Rates;
 import application.repos.CurrencyRateRepos;
 import application.repos.CurrencyRepository;
 import application.service.ICurrencyRateService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class CurrencyRateService implements ICurrencyRateService {
 
@@ -14,18 +16,17 @@ public class CurrencyRateService implements ICurrencyRateService {
 
     private CurrencyRepository currencyRepository;
 
-    public CurrencyRateService(CurrencyRateRepos currencyRateRepos, CurrencyRepository currencyRepository) {
-        this.currencyRateRepos = currencyRateRepos;
-        this.currencyRepository = currencyRepository;
-    }
-
     @Override
     public void add(String first, String second, double x) {
         boolean b = false;
         if (!first.equals(second) && x != 0 && x > 0 && currencyRateRepos.findAll().isEmpty()) {
             Currency currencyFirst = currencyRepository.findByValute(first);
             Currency currencySecond = currencyRepository.findByValute(second);
-            Rates rates = new Rates(currencyFirst, currencySecond, x);
+            Rates rates = Rates.builder()
+                    .first(currencyFirst)
+                    .second(currencySecond)
+                    .x(x)
+                    .build();
             currencyRateRepos.saveAndFlush(rates);
         } else if (!currencyRateRepos.findAll().isEmpty()) {
             Currency currencyFirst = currencyRepository.findByValute(first);
@@ -36,7 +37,11 @@ public class CurrencyRateService implements ICurrencyRateService {
                 }
             }
             if (!b) {
-                Rates rates = new Rates(currencyFirst, currencySecond, x);
+                Rates rates = Rates.builder()
+                        .first(currencyFirst)
+                        .second(currencySecond)
+                        .x(x)
+                        .build();
                 currencyRateRepos.saveAndFlush(rates);
             }
         }

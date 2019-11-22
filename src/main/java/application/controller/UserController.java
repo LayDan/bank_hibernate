@@ -38,8 +38,8 @@ public class UserController {
     public String editAccountRole(
             @RequestParam String username,
             @RequestParam Map<String, String> formRole,
-            @RequestParam(name = "userId") Object user, Model model) {
-        iUserService.editUser((User) user, username, formRole);
+            @RequestParam(name = "userId") long id, Model model) {
+        iUserService.editUser(id, username, formRole);
         return "redirect:/usersList";
 
     }

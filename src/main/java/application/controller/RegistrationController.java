@@ -25,11 +25,11 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String add(Object user, Map<String, Object> model) {
-        if (userServiceinterface.findByUsername(((User)user).getUsername())) {
+        if (userServiceinterface.findByUsername(((User) user).getUsername())) {
             model.put("infoAboutAccount", "User exists!");
             return "registration";
         } else {
-            userServiceinterface.addUser((User)user);
+            userServiceinterface.addUser((User) user);
             return "redirect:/login";
         }
     }

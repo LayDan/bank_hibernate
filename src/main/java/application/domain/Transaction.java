@@ -1,5 +1,7 @@
 package application.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Table(name = "transaction")
 public class Transaction {
@@ -24,7 +28,4 @@ public class Transaction {
     @Column
     private long userId;
 
-    public long getId() {
-        return id;
-    }
 }

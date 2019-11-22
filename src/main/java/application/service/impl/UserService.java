@@ -43,17 +43,23 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public User addUser(User user) {
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.saveAndFlush(user);
+        User newUser = User.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .age(user.getAge())
+                .active(true)
+                .password(passwordEncoder.encode(user.getPassword()))
+                .username(user.getUsername())
+                .roles(Collections.singleton(Role.USER))
+                .build();
+        userRepository.saveAndFlush(newUser);
         ////////////////////////////////////////
         Transaction transaction = new Transaction();
         transaction.setMessage("New user ");
-        transaction.setUserId(user.getId());
+        transaction.setUserId(newUser.getId());
         transactionRepos.saveAndFlush(transaction);
         ///////////////////////////////////////////////////////
-        return user;
+        return newUser;
     }
 
     @Override
@@ -62,7 +68,8 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public User editUser(User user, String username, Map<String, String> form) {
+    public User editUser(long id, String username, Map<String, String> form) {
+        User user = userRepository.findById(id);
         user.setUsername(username);
 
         Set<String> roles = Arrays.stream(Role.values())
@@ -100,7 +107,6 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     @Transactional
     public Iterable<Bill> getAllBill(User user) {
-        User user1 = userRepository.findByUsername(user.getUsername());
-        return user1.getBills();
+        return userRepository.findByUsername(user.getUsername()).getBills();
     }
 }

@@ -1,9 +1,6 @@
 package application.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,24 +8,15 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-//Data вызывает ошибки в hashcode из-за циклической зависимости между счётом пользователя и самим счётом
-
 
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "bills")
 @Table(name = "user_info")
 public class User implements UserDetails {
-
-    public User(String firstName, String lastName, int age, String username, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.username = username;
-        this.password = password;
-    }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,21 +38,19 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable = false)
+    @NonNull
     private Boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+    @NonNull
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
+    @Singular
+    @NonNull
     private Set<Bill> bills;
-
-
-    public boolean isActive() {
-        return active;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -98,6 +84,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive();
+        return active;
     }
 }

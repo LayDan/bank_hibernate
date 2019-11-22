@@ -3,40 +3,41 @@ package application.service.impl;
 import application.domain.Currency;
 import application.repos.CurrencyRepository;
 import application.service.ICurrencyService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class CurrencyService implements ICurrencyService {
 
     private CurrencyRepository currencyRepository;
 
-    public CurrencyService(CurrencyRepository currencyRepository) {
-        this.currencyRepository = currencyRepository;
-    }
-
     @Override
     public Currency addCurrency(Currency currency) {
+        Currency newCurrency = Currency.builder()
+                .valute(currency.getValute())
+                .build();
         boolean yes = true;
-        boolean cheek = cheek(currency);
+        boolean cheek = cheek(newCurrency);
         if (cheek && currencyRepository.findAll().isEmpty()) {
-            currencyRepository.saveAndFlush(currency);
-            return currency;
+            currencyRepository.saveAndFlush(newCurrency);
+            return newCurrency;
         } else if (cheek && !currencyRepository.findAll().isEmpty()) {
             for (Currency currency1 : currencyRepository.findAll()) {
-                if (currency1.getValute().equals(currency.getValute())) {
+                if (currency1.getValute().equals(newCurrency.getValute())) {
                     yes = false;
                     break;
                 }
             }
         }
         if (cheek && yes) {
-            currencyRepository.saveAndFlush(currency);
-            return currency;
+            currencyRepository.saveAndFlush(newCurrency);
+            return newCurrency;
         }
         return null;
     }
 
-    public boolean cheek(Currency currency) {
+    boolean cheek(Currency currency) {
         int cheek = 0;
         if (currency.getValute().length() == 3) {
             char[] arr = currency.getValute().toCharArray();

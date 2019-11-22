@@ -6,8 +6,10 @@ import javax.persistence.*;
 
 //Data вызывает ошибки в hashcode из-за циклической зависимости между счётом пользователя и самим счётом
 @Entity
-@Getter
-@Setter
+@Data
+@Builder
+@EqualsAndHashCode(exclude = "userId")
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bill")
 public class Bill {
@@ -26,15 +28,5 @@ public class Bill {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
-    @NonNull
     private User userId;
-
-
-    public Bill(Currency currency, double amoung, User userId) {
-        this.currency = currency;
-        this.amoung = amoung;
-        this.userId = userId;
-    }
-
-
 }

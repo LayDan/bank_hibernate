@@ -1,5 +1,7 @@
 package application.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Table(name = "rates")
 public class Rates {
@@ -28,10 +32,4 @@ public class Rates {
     @Column(nullable = false)
     private double x;
 
-
-    public Rates(Currency first, Currency second, double x) {
-        this.first = first;
-        this.second = second;
-        this.x = x;
-    }
 }
