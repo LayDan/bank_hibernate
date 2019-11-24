@@ -9,10 +9,6 @@ public interface IBillService {
 
     void delete(long id);
 
-    Bill edit(Bill bill);
-
-    Bill findByid(long id);
-
     void addMoney(long id, double amoung);
 
     void transfer(long numberCard, double amoung, long selfNumberCard, User user);

@@ -20,25 +20,18 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @NonNull
     private String firstName;
 
-    @NonNull
     private String lastName;
 
-    @NonNull
-    private int age;
+    private Integer age;
 
-    @NonNull
     private String username;
 
-    @NonNull
     private String password;
 
-    @Column(nullable = false)
-    @NonNull
     private Boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -47,7 +40,7 @@ public class User implements UserDetails {
     @NonNull
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Singular
     @NonNull
     private Set<Bill> bills;

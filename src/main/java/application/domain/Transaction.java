@@ -17,15 +17,16 @@ public class Transaction {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String message;
 
-    @Column
-    private long billId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bill", referencedColumnName = "numberCard")
+    private Bill bill;
 
-    @Column
-    private long userId;
-
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user", referencedColumnName = "id")
+    private User user;
 }

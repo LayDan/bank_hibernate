@@ -5,6 +5,9 @@ import application.repos.CurrencyRepository;
 import application.service.ICurrencyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @Service
@@ -13,26 +16,23 @@ public class CurrencyService implements ICurrencyService {
     private CurrencyRepository currencyRepository;
 
     @Override
+    @Transactional
     public Currency addCurrency(Currency currency) {
-        Currency newCurrency = Currency.builder()
-                .valute(currency.getValute())
-                .build();
-        boolean yes = true;
-        boolean cheek = cheek(newCurrency);
-        if (cheek && currencyRepository.findAll().isEmpty()) {
-            currencyRepository.saveAndFlush(newCurrency);
-            return newCurrency;
-        } else if (cheek && !currencyRepository.findAll().isEmpty()) {
-            for (Currency currency1 : currencyRepository.findAll()) {
-                if (currency1.getValute().equals(newCurrency.getValute())) {
-                    yes = false;
-                    break;
+        if (currency != null) {
+            ArrayList<Currency> currencyIterable = (ArrayList<Currency>) currencyRepository.findAll();
+            if (!currencyIterable.isEmpty()) {
+                boolean equals = currencyIterable.stream()
+                        .anyMatch(currency1 -> (currency1.getValute().equals(currency.getValute())));
+
+                boolean cheek = cheek(currency);
+                if (cheek && !equals) {
+                    Currency newCurrency = Currency.builder()
+                            .valute(currency.getValute())
+                            .build();
+                    currencyRepository.saveAndFlush(newCurrency);
+                    return newCurrency;
                 }
             }
-        }
-        if (cheek && yes) {
-            currencyRepository.saveAndFlush(newCurrency);
-            return newCurrency;
         }
         return null;
     }
@@ -51,6 +51,7 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         if (currencyRepository.findById(id).isPresent()) {
             currencyRepository.deleteById(id);

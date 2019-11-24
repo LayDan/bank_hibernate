@@ -18,18 +18,18 @@ public class Rates {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "valute")
+    @JoinColumn(name = "first", referencedColumnName = "valute")
     private Currency first;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "valute")
+    @JoinColumn(name = "second", referencedColumnName = "valute")
     private Currency second;
 
     @Column(nullable = false)
-    private double x;
+    private Double coefficient;
 
 }

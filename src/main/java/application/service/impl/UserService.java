@@ -42,6 +42,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
+    @Transactional
     public User addUser(User user) {
         User newUser = User.builder()
                 .firstName(user.getFirstName())
@@ -52,13 +53,14 @@ public class UserService implements UserDetailsService, IUserService {
                 .username(user.getUsername())
                 .roles(Collections.singleton(Role.USER))
                 .build();
-        userRepository.saveAndFlush(newUser);
-        ////////////////////////////////////////
-        Transaction transaction = new Transaction();
-        transaction.setMessage("New user ");
-        transaction.setUserId(newUser.getId());
+        newUser = userRepository.saveAndFlush(newUser);
+
+        Transaction transaction = Transaction.builder()
+                .message("New user")
+                .user(newUser)
+                .build();
         transactionRepos.saveAndFlush(transaction);
-        ///////////////////////////////////////////////////////
+
         return newUser;
     }
 
@@ -68,6 +70,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
+    @Transactional
     public User editUser(long id, String username, Map<String, String> form) {
         User user = userRepository.findById(id);
         user.setUsername(username);
@@ -83,12 +86,11 @@ public class UserService implements UserDetailsService, IUserService {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
-        /////////////////////////////////////////////////
-        Transaction transaction = new Transaction();
-        transaction.setUserId(user.getId());
-        transaction.setMessage("User edit " + user.getUsername());
+        Transaction transaction = Transaction.builder()
+                .user(user)
+                .message("User edit ")
+                .build();
         transactionRepos.saveAndFlush(transaction);
-        /////////////////////////////////////////////////
         return userRepository.save(user);
     }
 

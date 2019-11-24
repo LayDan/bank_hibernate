@@ -13,7 +13,7 @@ public class CurrencyServiceTest {
     @Test
     public void Testcheek() {
         Currency currency = new Currency();
-        currency.setId(4);
+        currency.setId((long) 1);
         currency.setValute("AAA");
         CurrencyService currencyService = new CurrencyService(currencyRepository);
         Assert.assertTrue(currencyService.cheek(currency));

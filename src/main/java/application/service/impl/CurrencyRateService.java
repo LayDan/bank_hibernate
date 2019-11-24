@@ -7,6 +7,9 @@ import application.repos.CurrencyRepository;
 import application.service.ICurrencyRateService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @Service
@@ -17,35 +20,26 @@ public class CurrencyRateService implements ICurrencyRateService {
     private CurrencyRepository currencyRepository;
 
     @Override
-    public void add(String first, String second, double x) {
-        boolean b = false;
-        if (!first.equals(second) && x != 0 && x > 0 && currencyRateRepos.findAll().isEmpty()) {
-            Currency currencyFirst = currencyRepository.findByValute(first);
-            Currency currencySecond = currencyRepository.findByValute(second);
-            Rates rates = Rates.builder()
-                    .first(currencyFirst)
-                    .second(currencySecond)
-                    .x(x)
-                    .build();
-            currencyRateRepos.saveAndFlush(rates);
-        } else if (!currencyRateRepos.findAll().isEmpty()) {
-            Currency currencyFirst = currencyRepository.findByValute(first);
-            Currency currencySecond = currencyRepository.findByValute(second);
-            for (Rates a : currencyRateRepos.findAll()) {
-                if (a.getFirst().getValute().equals(first) && a.getSecond().getValute().equals(second) && a.getX() == x) {
-                    b = true;
-                }
-            }
-            if (!b) {
+    @Transactional
+    public void add(String first, String second, double coefficient) {
+
+        ArrayList<Rates> ratesArrayList = (ArrayList<Rates>) currencyRateRepos.findAll();
+        if (!ratesArrayList.isEmpty() && !first.equals(second) && coefficient > 0) {
+            boolean equals = ratesArrayList.stream()
+                    .anyMatch(rates -> (rates.getFirst().getValute().equals(first) && rates.getSecond().getValute().equals(second))
+                            || (rates.getFirst().getValute().equals(second) && rates.getSecond().getValute().equals(first)));
+
+            if (!equals) {
+                Currency currencyFirst = currencyRepository.findByValute(first);
+                Currency currencySecond = currencyRepository.findByValute(second);
                 Rates rates = Rates.builder()
                         .first(currencyFirst)
                         .second(currencySecond)
-                        .x(x)
+                        .coefficient(coefficient)
                         .build();
                 currencyRateRepos.saveAndFlush(rates);
             }
         }
-
     }
 
     @Override

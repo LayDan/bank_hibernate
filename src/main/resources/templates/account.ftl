@@ -2,7 +2,7 @@
 <@C.page>
 
 <#if amoung??>
-${amoung} UAH
+${amoung}
 <#else>
 </#if>
 

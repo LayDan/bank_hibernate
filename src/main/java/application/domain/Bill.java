@@ -8,25 +8,25 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
-@EqualsAndHashCode(exclude = "userId")
+@Inheritance
+@EqualsAndHashCode(exclude = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bill")
 public class Bill {
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long numberCard;
+    private Long numberCard;
 
     //Currency
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "valute")
+    @JoinColumn(name = "currency", referencedColumnName = "valute")
     private Currency currency;
 
     @Column(nullable = false)
-    private double amoung;
+    private Double amoung;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
-    private User userId;
+    private User user;
 }

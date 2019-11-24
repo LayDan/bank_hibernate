@@ -6,7 +6,7 @@
 <table>
     <tr>
         <td><i>${c.first.valute}</i></td>
-        <td><i>${c.x}</i></td>
+        <td><i>${c.coefficient}</i></td>
         <td><i>${c.second.valute}</i></td>
     </tr>
 </table>
