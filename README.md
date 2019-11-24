@@ -1,4 +1,4 @@
-#Practical Bank
+# Practical Bank
 
 
 Practical Bank is a banking application simulator.
