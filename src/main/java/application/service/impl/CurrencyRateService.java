@@ -21,7 +21,7 @@ public class CurrencyRateService implements ICurrencyRateService {
 
     @Override
     @Transactional
-    public void add(String first, String second, double coefficient) {
+    public Rates add(String first, String second, double coefficient) {
 
         ArrayList<Rates> ratesArrayList = (ArrayList<Rates>) currencyRateRepos.findAll();
         if (!ratesArrayList.isEmpty() && !first.equals(second) && coefficient > 0) {
@@ -38,8 +38,10 @@ public class CurrencyRateService implements ICurrencyRateService {
                         .coefficient(coefficient)
                         .build();
                 currencyRateRepos.saveAndFlush(rates);
+                return rates;
             }
         }
+        return null;
     }
 
     @Override
