@@ -27,8 +27,8 @@ public class BillService implements IBillService {
     @Override
     @Transactional
     public User addBill(String currency, double amoung, User user) {
-        if (amoung >= 0 && user != null) {
-            Currency valute = currencyRepository.findByValute(currency);
+        Currency valute = currencyRepository.findByValute(currency);
+        if (amoung >= 0 && user != null && valute != null) {
             Bill bill = Bill.builder()
                     .amoung(amoung)
                     .currency(valute)
@@ -53,19 +53,21 @@ public class BillService implements IBillService {
     @Transactional
     public void delete(long id) {
         Bill bill = billRepo.findById(id);
-        billRepo.deleteById(id);
-        Transaction transaction = Transaction.builder()
-                .message("Delete bill")
-                .bill(bill)
-                .user(bill.getUser())
-                .build();
-        transactionRepos.saveAndFlush(transaction);
+        if (bill != null) {
+            billRepo.deleteById(id);
+            Transaction transaction = Transaction.builder()
+                    .message("Delete bill")
+                    .bill(bill)
+                    .user(bill.getUser())
+                    .build();
+            transactionRepos.saveAndFlush(transaction);
+        }
     }
 
     @Override
     @Transactional
     public void addMoney(long id, double amoung) {
-            Bill bill = billRepo.findById(id);
+        Bill bill = billRepo.findById(id);
         if (bill != null) {
             bill.setAmoung(amoung + bill.getAmoung());
             billRepo.save(bill);
@@ -123,7 +125,7 @@ public class BillService implements IBillService {
         double multicast = 0;
         Currency newCurrency = currencyRepository.findByValute(currency);
         Rates rates = null;
-        if (bill != null) {
+        if (bill != null && newCurrency != null) {
             List<Rates> all = currencyRateRepos.findAll();
             for (Rates a : all) {
                 if (a.getFirst().getValute().equals(bill.getCurrency().getValute()) && a.getSecond().getValute().equals(currency)) {
