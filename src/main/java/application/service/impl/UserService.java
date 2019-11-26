@@ -65,8 +65,17 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserById(long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id);
+        if (user != null) {
+            userRepository.deleteById(id);
+            Transaction transaction = Transaction.builder()
+                    .message("Delete user")
+                    .user(user)
+                    .build();
+            transactionRepos.saveAndFlush(transaction);
+        }
     }
 
     @Override
