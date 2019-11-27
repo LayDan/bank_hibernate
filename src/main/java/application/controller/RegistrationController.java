@@ -24,8 +24,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String add(Object user, Map<String, Object> model) {
-        if (userServiceinterface.findByUsername(((User) user).getUsername())) {
+    public String add(User user, Map<String, Object> model) {
+        if (userServiceinterface.findByUsername((user).getUsername())) {
             model.put("infoAboutAccount", "User exists!");
             return "registration";
         } else {

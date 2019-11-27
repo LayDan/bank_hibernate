@@ -3,6 +3,7 @@ package application.controller;
 import application.domain.Currency;
 import application.service.ICurrencyRateService;
 import application.service.ICurrencyService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class MainController {
         return "currencyRate";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/addCurrencyRate")
     public String addCurrencyRate(Model model) {
         model.addAttribute(currencys, iCurrencyService.findAll());
@@ -56,6 +58,7 @@ public class MainController {
 
     /////////////////////////////////////////////////////////////////////////Currency
     @GetMapping("/addCurrency")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String addCurrency(Model model) {
         return "addCurrency";
     }

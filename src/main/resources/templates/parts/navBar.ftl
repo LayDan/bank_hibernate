@@ -1,3 +1,5 @@
+<#include "security.ftl">
+<#import "login.ftl" as l>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Bank</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -14,21 +16,32 @@
                     <a class="dropdown-item" href="/login">Логин</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/account">Аккаунт</a>
+                    <#if isAdmin>
                     <a class="dropdown-item" href="/usersList">Список пользователей</a>
-                    <a class="dropdown-item" href="/registration">Выйти</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Курсы Валют</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/addCurrency">Добавить валюту</a>
-                    <a class="dropdown-item" href="/currency">Посмотреть валюту</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/addCurrencyRate">Добавить курс</a>
-                    <a class="dropdown-item" href="/currencyRate">Посмотреть таблицу</a>
-                </div>
-            </li>
-        </ul>
+                </
+                #if>
+                <a class="dropdown-item" href="/registration">Выйти</a>
     </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Курсы Валют</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <#if isAdmin>
+            <a class="dropdown-item" href="/addCurrency">Добавить валюту</a>
+        </
+        #if>
+        <a class="dropdown-item" href="/currency">Посмотреть валюту</a>
+        <div class="dropdown-divider"></div>
+        <#if isAdmin>
+        <a class="dropdown-item" href="/addCurrencyRate">Добавить курс</a>
+    </
+    #if>
+    <a class="dropdown-item" href="/currencyRate">Посмотреть таблицу</a>
+    </div>
+    </li>
+    </ul>
+    </div>
+    <div class="navbar-text mr-3">${name}</div>
+    <@l.logout/>
 </nav>
